@@ -1,0 +1,28 @@
+<%# "Typical week": expected hours per weekday, entered on the user's own account page.
+    Feeds the day-status colours in the quick-entry sidebar (see
+    RedmineQuickTimelogHelper#redmine_quick_timelog_day_status). Saved over AJAX to its own plugin
+    route rather than through /my/account's own form: UserPreference.safe_attributes
+    can't be extended with an arbitrary plugin key without a core patch, and nesting a
+    second <form> inside the account page's form would be invalid HTML. %>
+<% current_user = local_assigns[:user] || User.current
+   current_target = redmine_quick_timelog_weekly_target(current_user) || {} %>
+<fieldset class="box tabular qtl-weekly-target" data-qtl-weekly-target="1"
+          data-qtl-save-url="<%= redmine_quick_timelog_weekly_target_path %>">
+  <legend><%= l(:redmine_quick_timelog_weekly_target_title) %></legend>
+  <p class="qtl-weekly-target__hint"><%= l(:redmine_quick_timelog_weekly_target_hint) %></p>
+  <div class="qtl-weekly-target__grid">
+    <% redmine_quick_timelog_weekly_target_days.each do |day| %>
+      <label class="qtl-weekly-target__day">
+        <span class="qtl-weekly-target__day-name"><%= day[:label] %></span>
+        <input type="number" min="0" max="24" step="0.25"
+               class="qtl-weekly-target__input"
+               data-qtl-weekly-day="<%= day[:day] %>"
+               value="<%= current_target[day[:day]] %>" />
+      </label>
+    <% end %>
+  </div>
+  <p class="qtl-weekly-target__actions">
+    <button type="button" class="qtl-weekly-target__save" data-qtl-weekly-save="1"><%= l(:button_save) %></button>
+    <span class="qtl-weekly-target__message" data-qtl-weekly-message="1"></span>
+  </p>
+</fieldset>

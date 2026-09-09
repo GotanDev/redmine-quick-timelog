@@ -1,0 +1,40 @@
+<%# Today's entries for the current user, plus totals.
+    Rendered on page load, then replaced after each AJAX save. Always exactly `date`
+    (today, unless a specific date is passed in): the collapsible history tree covers
+    everything before it. %>
+<% date = local_assigns[:date] || User.current.today %>
+<h4 class="qtl-entries__title"><%= l(:redmine_quick_timelog_recent_title) %></h4>
+
+<% if entries.blank? %>
+  <p class="qtl-entries__empty"><%= l(:redmine_quick_timelog_no_entries) %></p>
+<% else %>
+  <ul class="qtl-entries">
+    <% entries.each do |entry| %>
+      <li class="qtl-entries__item">
+        <span class="qtl-entries__hours"><%= redmine_quick_timelog_format_hours(entry.hours) %></span>
+        <span class="qtl-entries__subject">
+          <% if entry.issue && entry.issue.visible? %>
+            <%= link_to_issue(entry.issue, :truncate => 60) %>
+          <% elsif entry.issue %>
+            <%= "##{entry.issue_id}" %>
+          <% else %>
+            <%= link_to(entry.project.name, project_time_entries_path(entry.project)) %>
+          <% end %>
+          <% if entry.comments.present? %>
+            <span class="qtl-entries__meta"><%= entry.comments %></span>
+          <% end %>
+        </span>
+        <span class="qtl-entries__meta"><%= entry.activity.try(:name) %></span>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<p class="qtl-entries__total">
+  <span><%= l(:redmine_quick_timelog_total_day) %></span>
+  <span><%= redmine_quick_timelog_format_hours(redmine_quick_timelog_day_total(date)) %></span>
+</p>
+<p class="qtl-entries__total">
+  <span><%= l(:redmine_quick_timelog_total_week) %></span>
+  <span><%= redmine_quick_timelog_format_hours(redmine_quick_timelog_week_total(date)) %></span>
+</p>

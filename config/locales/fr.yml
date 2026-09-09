@@ -1,0 +1,91 @@
+fr:
+  # Libellé du bloc dans « Ma page » (clé attendue par Redmine::MyPage).
+  my:
+    blocks:
+      redmine_quick_timelog: Saisie rapide de temps
+
+  # Second recours de Redmine::MyPage quand my.blocks.redmine_quick_timelog n'est pas résolu.
+  redmine_quick_timelog: Saisie rapide de temps
+  label_redmine_quick_timelog: Saisie rapide
+
+  redmine_quick_timelog_block_title: Saisie rapide de temps
+  redmine_quick_timelog_page_title: Saisie rapide de temps
+  redmine_quick_timelog_submit: Enregistrer
+  redmine_quick_timelog_shortcut_hint: "Ctrl + Entrée pour enregistrer"
+  redmine_quick_timelog_issue_placeholder: "N° ou mots du sujet"
+  redmine_quick_timelog_no_issue: Aucune demande
+  redmine_quick_timelog_no_project: Aucun projet ne vous autorise à saisir du temps.
+  redmine_quick_timelog_recent_projects: Projets récents
+  redmine_quick_timelog_all_projects: Tous les projets
+  redmine_quick_timelog_hours_unit: h
+
+  redmine_quick_timelog_created: "%{hours} enregistrées sur %{subject}."
+  redmine_quick_timelog_error_generic: Enregistrement impossible.
+  redmine_quick_timelog_error_invalid_expression: Expression incomprise
+  redmine_quick_timelog_error_negative: Le total est négatif.
+  redmine_quick_timelog_error_project_not_allowed: Vous n'êtes pas autorisé à saisir du temps sur ce projet.
+  redmine_quick_timelog_error_issue_not_found: Demande introuvable ou hors du projet choisi.
+
+  redmine_quick_timelog_recent_title: Aujourd'hui
+  redmine_quick_timelog_no_entries: Aucun temps saisi aujourd'hui.
+  redmine_quick_timelog_total_day: Total du jour
+  redmine_quick_timelog_total_week: Total de la semaine
+
+  redmine_quick_timelog_history_title: "%{days} derniers jours"
+  redmine_quick_timelog_history_empty: Aucune saisie sur cette période.
+
+  redmine_quick_timelog_wand_title: Calculer les heures depuis des plages horaires
+  redmine_quick_timelog_wand_label: Plages horaires
+  redmine_quick_timelog_wand_placeholder: "08:22 > 12:39, 13:22 > 14:32"
+  redmine_quick_timelog_wand_apply: Appliquer
+  redmine_quick_timelog_wand_hint: "Plages « 9h > 12h30 », durées « 1h30 » ou « 45m », pauses « -30m ». Séparez par une virgule."
+
+  redmine_quick_timelog_settings_title: Saisie rapide de temps
+  redmine_quick_timelog_setting_show_on_welcome: Afficher le formulaire sur la page d'accueil
+  redmine_quick_timelog_setting_show_on_welcome_hint: Ajoute le bloc de saisie rapide dans la colonne droite de la page d'accueil de Redmine.
+  redmine_quick_timelog_setting_inline_parse: Interpréter les plages horaires saisies directement dans le champ « Heures »
+  redmine_quick_timelog_setting_inline_parse_hint: "Saisir « 9h > 12h30 » dans le champ Heures le convertit en durée dès que le champ perd le focus."
+  redmine_quick_timelog_setting_wand_everywhere: Ajouter la baguette magique à tous les formulaires de saisie de temps
+  redmine_quick_timelog_setting_wand_everywhere_hint: Décochez pour la limiter au formulaire de saisie rapide de ce plugin.
+  redmine_quick_timelog_setting_default_activity: Activité proposée par défaut
+  redmine_quick_timelog_setting_recent_days: Historique (jours avant aujourd'hui)
+  redmine_quick_timelog_setting_comment_required: Rendre le commentaire obligatoire dans la saisie rapide
+  redmine_quick_timelog_setting_working_days: Jours ouvrés
+  redmine_quick_timelog_setting_working_days_hint: Utilisés pour la mise en évidence des jours sans saisie ci-dessous ; un simple calendrier hebdomadaire, pas les jours fériés.
+  redmine_quick_timelog_setting_highlight_missing_days: Mettre en orange les jours ouvrés sans aucune saisie
+  redmine_quick_timelog_setting_highlight_missing_days_hint: Sans effet sur un jour couvert par une semaine type personnelle (voir « Mon compte ») ; celle-ci prévaut.
+  redmine_quick_timelog_setting_timer_notify_hours: Notifier après (heures consécutives)
+  redmine_quick_timelog_setting_timer_notify_hours_hint: Une notification du navigateur s'affiche si le chronomètre tourne sans interruption au-delà de cette durée. Laisser vide ou 0 pour désactiver.
+  redmine_quick_timelog_setting_timer_notify_times: Heures de vérification
+  redmine_quick_timelog_setting_timer_notify_times_hint: "Une notification s'affiche dès que l'heure est dépassée et que le chronomètre tourne encore. Plusieurs heures séparées par une virgule, ex. 12:30, 18:00."
+
+  redmine_quick_timelog_weekly_target_title: Semaine type
+  redmine_quick_timelog_weekly_target_hint: Heures attendues par jour de la semaine. Un jour laissé vide n'est jamais mis en évidence. Alimente les couleurs de l'historique de saisie rapide.
+  redmine_quick_timelog_weekly_target_saved: Enregistré.
+  redmine_quick_timelog_weekly_target_error: Enregistrement impossible.
+
+  label_redmine_quick_timelog_timer: Chronomètre
+  redmine_quick_timelog_timer_title: Chronomètre
+  redmine_quick_timelog_timer_start_btn: Démarrer le chronomètre
+  redmine_quick_timelog_timer_running: Chronomètre en cours…
+  redmine_quick_timelog_timer_pause: Pause
+  redmine_quick_timelog_timer_paused: En pause
+  redmine_quick_timelog_timer_resume: Reprendre
+  redmine_quick_timelog_timer_reset: Remettre à zéro
+  redmine_quick_timelog_timer_reset_confirm: Remettre le chronomètre à zéro ?
+  redmine_quick_timelog_timer_stop: Stopper et enregistrer
+  redmine_quick_timelog_timer_saving: Enregistrement…
+  redmine_quick_timelog_timer_saved: Temps enregistré avec succès !
+  redmine_quick_timelog_timer_close: Fermer la fenêtre
+  redmine_quick_timelog_timer_connected: Connecté
+  redmine_quick_timelog_timer_reconnecting: Reconnexion…
+  redmine_quick_timelog_timer_keepalive_hint: Maintien de session actif — ne se déconnecte jamais
+  redmine_quick_timelog_timer_comments_label: Ce sur quoi vous travaillez
+  redmine_quick_timelog_timer_comments_placeholder: Notez ici vos tâches, détails et résumé du travail en cours…
+  redmine_quick_timelog_timer_comments_hint: Vos commentaires sont sauvegardés en direct et seront enregistrés avec le temps.
+  redmine_quick_timelog_timer_warn_running: Un chronomètre est en cours. Vos données sont conservées localement, mais le temps n'a pas encore été enregistré. Voulez-vous quitter ?
+  redmine_quick_timelog_timer_error_too_short: Le chronomètre doit tourner au moins quelques secondes avant d'enregistrer.
+  redmine_quick_timelog_timer_notify_long_title: Chronomètre en cours depuis longtemps
+  redmine_quick_timelog_timer_notify_long_body: "Ce chronomètre tourne en continu depuis plus de %{hours} heures."
+  redmine_quick_timelog_timer_notify_time_title: Rappel programmé
+  redmine_quick_timelog_timer_notify_time_body: "Il est %{time} passé et le chronomètre tourne toujours."

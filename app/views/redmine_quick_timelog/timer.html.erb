@@ -1,0 +1,120 @@
+<%# Popup timer started on a project. %>
+<div class="qtl-timer"
+     data-qtl-timer="1"
+     data-qtl-project-id="<%= @project.id %>"
+     data-qtl-project-name="<%= ERB::Util.html_escape(@project.name) %>"
+     data-qtl-create-url="<%= redmine_quick_timelog_entries_path %>"
+     data-qtl-keepalive-url="<%= redmine_quick_timelog_keepalive_path %>"
+     data-qtl-issues-url="<%= redmine_quick_timelog_issues_path %>">
+
+  <header class="qtl-timer__header">
+    <div class="qtl-timer__project-info">
+      <span class="qtl-timer__project-badge"><%= l(:field_project) %></span>
+      <h1 class="qtl-timer__project-name" title="<%= @project.name %>"><%= @project.name %></h1>
+    </div>
+    <div class="qtl-timer__status-wrapper">
+      <span class="qtl-timer__status qtl-timer__status--connected"
+            data-qtl-timer-status="1"
+            title="<%= l(:redmine_quick_timelog_timer_keepalive_hint) %>">
+        <span class="qtl-timer__status-dot"></span>
+        <span class="qtl-timer__status-text" data-qtl-timer-status-text="1"><%= l(:redmine_quick_timelog_timer_connected) %></span>
+      </span>
+    </div>
+  </header>
+
+  <div class="qtl-timer__messages" data-qtl-messages="1"></div>
+
+  <%# Main timer display %>
+  <section class="qtl-timer__counter-card">
+    <div class="qtl-timer__display">
+      <div class="qtl-timer__pulse-indicator" data-qtl-timer-pulse="1"></div>
+      <span class="qtl-timer__digits" data-qtl-timer-digits="1">00:00:00</span>
+    </div>
+    <div class="qtl-timer__state-label" data-qtl-timer-state-label="1">
+      <%= l(:redmine_quick_timelog_timer_running) %>
+    </div>
+  </section>
+
+  <%# Timer control buttons %>
+  <div class="qtl-timer__controls">
+    <button type="button"
+            class="qtl-timer__btn qtl-timer__btn--secondary"
+            data-qtl-timer-toggle="1"
+            title="<%= l(:redmine_quick_timelog_timer_pause) %>">
+      <span class="qtl-timer__btn-icon" data-qtl-timer-toggle-icon="1">⏸</span>
+      <span data-qtl-timer-toggle-label="1"><%= l(:redmine_quick_timelog_timer_pause) %></span>
+    </button>
+
+    <button type="button"
+            class="qtl-timer__btn qtl-timer__btn--quiet"
+            data-qtl-timer-reset="1"
+            title="<%= l(:redmine_quick_timelog_timer_reset) %>">
+      <span class="qtl-timer__btn-icon">↺</span>
+      <span><%= l(:redmine_quick_timelog_timer_reset) %></span>
+    </button>
+  </div>
+
+  <%# Form for the current work and for saving %>
+  <form class="qtl-timer__form" data-qtl-timer-form="1">
+    <input type="hidden" name="time_entry[project_id]" value="<%= @project.id %>" />
+    <input type="hidden" name="time_entry[hours]" data-qtl-timer-hours="1" value="" />
+
+    <%# Textarea for what's being worked on %>
+    <div class="qtl-timer__field-group">
+      <label class="qtl-timer__label <%= 'qtl-required' if redmine_quick_timelog_comment_required? %>" for="qtl_timer_comments">
+        <%= l(:redmine_quick_timelog_timer_comments_label) %>
+      </label>
+      <textarea id="qtl_timer_comments"
+                name="time_entry[comments]"
+                class="qtl-timer__textarea"
+                rows="4"
+                placeholder="<%= l(:redmine_quick_timelog_timer_comments_placeholder) %>"
+                data-qtl-timer-comments="1"
+                <%= 'required="required"'.html_safe if redmine_quick_timelog_comment_required? %>></textarea>
+      <span class="qtl-timer__hint"><%= l(:redmine_quick_timelog_timer_comments_hint) %></span>
+    </div>
+
+    <%# Optional issue %>
+    <div class="qtl-timer__field-group">
+      <label class="qtl-timer__label <%= 'qtl-required' if redmine_quick_timelog_required_field?('issue_id') %>" for="qtl_timer_issue">
+        <%= l(:label_issue) %>
+      </label>
+      <select id="qtl_timer_issue" name="time_entry[issue_id]" class="qtl-timer__select" data-qtl-timer-issue="1">
+        <option value=""><%= l(:redmine_quick_timelog_no_issue) %></option>
+        <% @issues.each do |issue| %>
+          <option value="<%= issue.id %>" <%= 'selected="selected"'.html_safe if issue.id == @preselected_issue_id %>>#<%= issue.id %> — <%= truncate(issue.subject, :length => 60) %></option>
+        <% end %>
+      </select>
+    </div>
+
+    <%# Activity + Date row %>
+    <div class="qtl-timer__field-row">
+      <div class="qtl-timer__field-col">
+        <label class="qtl-timer__label qtl-required" for="qtl_timer_activity"><%= l(:field_activity) %></label>
+        <%= select_tag 'time_entry[activity_id]',
+                       options_for_select(@activities.map { |a| [a[:name], a[:id]] }, @default_activity_id.to_s),
+                       :id => 'qtl_timer_activity',
+                       :class => 'qtl-timer__select',
+                       :data => {:'qtl-timer-activity' => '1'} %>
+      </div>
+      <div class="qtl-timer__field-col">
+        <label class="qtl-timer__label qtl-required" for="qtl_timer_date"><%= l(:field_spent_on) %></label>
+        <input type="date"
+               id="qtl_timer_date"
+               name="time_entry[spent_on]"
+               class="qtl-timer__input"
+               value="<%= User.current.today.to_s %>"
+               required="required"
+               data-qtl-timer-date="1" />
+      </div>
+    </div>
+
+    <%# Stop-and-save button (closes the popup) %>
+    <div class="qtl-timer__actions">
+      <button type="button" class="qtl-timer__btn qtl-timer__btn--stop" data-qtl-timer-stop="1">
+        <span class="qtl-timer__btn-icon">⏹</span>
+        <span><%= l(:redmine_quick_timelog_timer_stop) %></span>
+      </button>
+    </div>
+  </form>
+</div>

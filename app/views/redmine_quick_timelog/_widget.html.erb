@@ -1,0 +1,163 @@
+<%# Quick-entry form.
+    Works without JavaScript (a plain POST, then a redirect); JavaScript adds AJAX
+    submission, issue autocompletion, and the magic wand.
+    Local `title`: heading shown next to the timer-start button (defaults to the
+    standard block title). Local `time_entry`: pre-built entry (e.g. from the
+    dedicated page); a fresh one is otherwise built here. %>
+<% projects = redmine_quick_timelog_projects
+   time_entry = local_assigns[:time_entry] || TimeEntry.new(:author => User.current, :user => User.current, :spent_on => User.current.today)
+   selected_project = time_entry.project || redmine_quick_timelog_remembered_project(projects) || projects.first
+   # Time-entry custom fields are filtered by role, hence by project: without a project,
+   # a restricted field wouldn't be rendered at all.
+   time_entry.project ||= selected_project
+   users = selected_project ? redmine_quick_timelog_user_options(selected_project) : []
+   custom_fields_html = redmine_quick_timelog_custom_fields_html(time_entry)
+   today = User.current.today
+   history_days = redmine_quick_timelog_setting(:recent_days, 14).to_i %>
+
+<%= render :partial => 'redmine_quick_timelog/assets' %>
+
+<div class="qtl-widget"
+     data-qtl-widget="1"
+     data-qtl-create-url="<%= redmine_quick_timelog_entries_path %>"
+     data-qtl-context-url="<%= redmine_quick_timelog_context_path %>"
+     data-qtl-issues-url="<%= redmine_quick_timelog_issues_path %>"
+     data-qtl-timer-url="<%= redmine_quick_timelog_timer_path %>">
+
+  <div class="qtl-widget__header">
+    <h3 class="qtl-widget__title"><%= local_assigns[:title] || l(:redmine_quick_timelog_block_title) %></h3>
+    <% if selected_project %>
+      <button type="button" class="qtl-widget__timer-btn" data-qtl-launch-timer="1"
+              title="<%= l(:redmine_quick_timelog_timer_start_btn) %>">⏱ <%= l(:label_redmine_quick_timelog_timer) %></button>
+    <% end %>
+  </div>
+
+  <% if projects.empty? %>
+    <p class="nodata"><%= l(:redmine_quick_timelog_no_project) %></p>
+  <% else %>
+    <div class="qtl-widget__body">
+      <div class="qtl-widget__main">
+        <div class="qtl-widget__messages" data-qtl-messages="1"></div>
+
+        <%= form_tag(redmine_quick_timelog_entries_path, :class => 'qtl-widget__form', :data => {:'qtl-form' => '1'}) do %>
+          <%# The page hosting the form, not the referrer: without JavaScript, saving
+              must come back here. %>
+          <%= hidden_field_tag('back_url', url_for(:only_path => true), :id => nil) %>
+
+          <div class="qtl-widget__pair">
+            <div class="qtl-widget__row">
+              <label class="qtl-widget__label" for="qtl_project_id"><%= l(:field_project) %></label>
+              <span class="qtl-widget__control">
+                <select id="qtl_project_id" name="time_entry[project_id]" class="qtl-widget__select qtl-widget__select--project"
+                        data-qtl-project="1" data-qtl-field="project_id">
+                  <%= redmine_quick_timelog_project_options(projects, selected_project.try(:id)) %>
+                </select>
+              </span>
+            </div>
+
+            <div class="qtl-widget__row">
+              <label class="qtl-widget__label <%= 'qtl-required' if redmine_quick_timelog_required_field?('issue_id') %>"
+                     for="qtl_issue" data-qtl-issue-label="1"><%= l(:label_issue) %></label>
+              <span class="qtl-widget__control">
+                <input type="text" id="qtl_issue" name="redmine_quick_timelog[issue]" class="qtl-widget__input qtl-widget__input--issue"
+                       autocomplete="off" placeholder="<%= l(:redmine_quick_timelog_issue_placeholder) %>"
+                       role="combobox" aria-autocomplete="list" aria-expanded="false"
+                       aria-controls="qtl_issue_results"
+                       data-qtl-issue="1" data-qtl-field="issue_hint" />
+                <input type="hidden" name="time_entry[issue_id]" data-qtl-issue-id="1" data-qtl-field="issue_id" />
+                <ul class="qtl-issues" id="qtl_issue_results" role="listbox"
+                    aria-label="<%= l(:label_issue_plural) %>" data-qtl-issue-results="1" hidden="hidden"></ul>
+              </span>
+            </div>
+          </div>
+
+          <div class="qtl-widget__pair">
+            <div class="qtl-widget__row">
+              <label class="qtl-widget__label qtl-required" for="qtl_spent_on"><%= l(:field_spent_on) %></label>
+              <span class="qtl-widget__control">
+                <input type="date" id="qtl_spent_on" name="time_entry[spent_on]" class="qtl-widget__input qtl-widget__input--date"
+                       value="<%= today.to_s %>" required="required" data-qtl-field="spent_on" />
+              </span>
+            </div>
+
+            <div class="qtl-widget__row">
+              <label class="qtl-widget__label qtl-required" for="qtl_hours"><%= l(:field_hours) %></label>
+              <span class="qtl-widget__control">
+                <input type="text" id="qtl_hours" name="time_entry[hours]"
+                       class="qtl-widget__input qtl-widget__input--hours"
+                       autocomplete="off" required="required"
+                       placeholder="<%= redmine_quick_timelog_hours_placeholder %>"
+                       data-qtl-hours="1" data-qtl-field="hours" />
+                <span class="qtl-widget__hint"><%= l(:redmine_quick_timelog_wand_hint) %></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="qtl-widget__row">
+            <label class="qtl-widget__label <%= 'qtl-required' if redmine_quick_timelog_comment_required? %>"
+                   for="qtl_comments"><%= l(:field_comments) %></label>
+            <span class="qtl-widget__control">
+              <input type="text" id="qtl_comments" name="time_entry[comments]" class="qtl-widget__input"
+                     maxlength="1024" <%= 'required="required"'.html_safe if redmine_quick_timelog_comment_required? %>
+                     data-qtl-field="comments" />
+            </span>
+          </div>
+
+          <% if custom_fields_html.present? %>
+            <div class="qtl-widget__pair">
+              <div class="qtl-widget__row">
+                <label class="qtl-widget__label qtl-required" for="qtl_activity_id"><%= l(:field_activity) %></label>
+                <span class="qtl-widget__control">
+                  <%= select_tag 'time_entry[activity_id]',
+                                 options_for_select(redmine_quick_timelog_activity_options(selected_project, time_entry).map { |a| [a[:name], a[:id]] },
+                                                    redmine_quick_timelog_default_activity_id(selected_project).to_s),
+                                 :id => 'qtl_activity_id',
+                                 :class => 'qtl-widget__select qtl-widget__select--activity',
+                                 :data => {:'qtl-activity' => '1', :'qtl-field' => 'activity_id'} %>
+                </span>
+              </div>
+              <div class="qtl-widget__custom-fields" data-qtl-custom-fields="1"><%= custom_fields_html %></div>
+            </div>
+          <% else %>
+            <div class="qtl-widget__row">
+              <label class="qtl-widget__label qtl-required" for="qtl_activity_id"><%= l(:field_activity) %></label>
+              <span class="qtl-widget__control">
+                <%= select_tag 'time_entry[activity_id]',
+                               options_for_select(redmine_quick_timelog_activity_options(selected_project, time_entry).map { |a| [a[:name], a[:id]] },
+                                                  redmine_quick_timelog_default_activity_id(selected_project).to_s),
+                               :id => 'qtl_activity_id',
+                               :class => 'qtl-widget__select qtl-widget__select--activity',
+                               :data => {:'qtl-activity' => '1', :'qtl-field' => 'activity_id'} %>
+              </span>
+            </div>
+            <div class="qtl-widget__custom-fields" data-qtl-custom-fields="1"></div>
+          <% end %>
+
+          <div class="qtl-widget__row" data-qtl-user-row="1" <%= 'hidden="hidden"'.html_safe if users.size < 2 %>>
+            <label class="qtl-widget__label" for="qtl_user_id"><%= l(:field_user) %></label>
+            <span class="qtl-widget__control">
+              <%= select_tag 'time_entry[user_id]',
+                             options_for_select(users.map { |u| [u[:name], u[:id].to_s] }, User.current.id.to_s),
+                             :id => 'qtl_user_id',
+                             :class => 'qtl-widget__select',
+                             :data => {:'qtl-user' => '1', :'qtl-field' => 'user_id'} %>
+            </span>
+          </div>
+
+          <div class="qtl-widget__actions">
+            <button type="submit" class="qtl-widget__submit" data-qtl-submit="1"><%= l(:redmine_quick_timelog_submit) %></button>
+            <span class="qtl-widget__shortcut"><%= l(:redmine_quick_timelog_shortcut_hint) %></span>
+          </div>
+        <% end %>
+      </div>
+
+      <aside class="qtl-widget__sidebar">
+        <div data-qtl-recent="1">
+          <%= render :partial => 'redmine_quick_timelog/entries',
+                     :locals => {:entries => redmine_quick_timelog_recent_entries(today), :date => today} %>
+        </div>
+        <%= render :partial => 'redmine_quick_timelog/history_tree', :locals => {:days => history_days} %>
+      </aside>
+    </div>
+  <% end %>
+</div>

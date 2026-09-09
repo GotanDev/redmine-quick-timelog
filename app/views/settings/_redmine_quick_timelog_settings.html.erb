@@ -1,0 +1,75 @@
+<%# Plugin settings (Administration > Modules > Quick Timelog > Configure).
+    Rendered inside <div class="box tabular settings"> with the `settings` hash. %>
+<% activities = TimeEntryActivity.shared.active.to_a rescue [] %>
+
+<p>
+  <%= label_tag 'settings_show_on_welcome', l(:redmine_quick_timelog_setting_show_on_welcome) %>
+  <%= hidden_field_tag 'settings[show_on_welcome]', '0', :id => nil %>
+  <%= check_box_tag 'settings[show_on_welcome]', '1', settings['show_on_welcome'].to_s == '1' %>
+  <em class="info"><%= l(:redmine_quick_timelog_setting_show_on_welcome_hint) %></em>
+</p>
+
+<p>
+  <%= label_tag 'settings_wand_everywhere', l(:redmine_quick_timelog_setting_wand_everywhere) %>
+  <%= hidden_field_tag 'settings[wand_everywhere]', '0', :id => nil %>
+  <%= check_box_tag 'settings[wand_everywhere]', '1', settings['wand_everywhere'].to_s == '1' %>
+  <em class="info"><%= l(:redmine_quick_timelog_setting_wand_everywhere_hint) %></em>
+</p>
+
+<p>
+  <%= label_tag 'settings_inline_parse', l(:redmine_quick_timelog_setting_inline_parse) %>
+  <%= hidden_field_tag 'settings[inline_parse]', '0', :id => nil %>
+  <%= check_box_tag 'settings[inline_parse]', '1', settings['inline_parse'].to_s == '1' %>
+  <em class="info"><%= l(:redmine_quick_timelog_setting_inline_parse_hint) %></em>
+</p>
+
+<p>
+  <%= label_tag 'settings_comment_required', l(:redmine_quick_timelog_setting_comment_required) %>
+  <%= hidden_field_tag 'settings[comment_required]', '0', :id => nil %>
+  <%= check_box_tag 'settings[comment_required]', '1', settings['comment_required'].to_s == '1' %>
+</p>
+
+<p>
+  <%= label_tag 'settings_default_activity', l(:redmine_quick_timelog_setting_default_activity) %>
+  <%= select_tag 'settings[default_activity]',
+                 options_for_select([["<< #{l(:label_default)} >>", '']] + activities.map { |a| [a.name, a.name] },
+                                    settings['default_activity'].to_s) %>
+</p>
+
+<p>
+  <%= label_tag 'settings_recent_days', l(:redmine_quick_timelog_setting_recent_days) %>
+  <%= text_field_tag 'settings[recent_days]', settings['recent_days'].presence || '14', :size => 4 %>
+</p>
+
+<p>
+  <label><%= l(:redmine_quick_timelog_setting_working_days) %></label>
+  <%= hidden_field_tag 'settings[working_days][]', '', :id => nil %>
+  <% current_days = (Array(settings['working_days']).presence || RedmineQuickTimelogHelper::DEFAULT_WORKING_DAYS).map(&:to_s) %>
+  <% (1..7).each do |d| %>
+    <label class="qtl-settings__day">
+      <%= check_box_tag 'settings[working_days][]', d.to_s, current_days.include?(d.to_s), :id => nil %>
+      <%= day_name(d) %>
+    </label>
+  <% end %>
+  <br />
+  <em class="info"><%= l(:redmine_quick_timelog_setting_working_days_hint) %></em>
+</p>
+
+<p>
+  <%= label_tag 'settings_highlight_missing_days', l(:redmine_quick_timelog_setting_highlight_missing_days) %>
+  <%= hidden_field_tag 'settings[highlight_missing_days]', '0', :id => nil %>
+  <%= check_box_tag 'settings[highlight_missing_days]', '1', settings['highlight_missing_days'].to_s == '1' %>
+  <em class="info"><%= l(:redmine_quick_timelog_setting_highlight_missing_days_hint) %></em>
+</p>
+
+<p>
+  <%= label_tag 'settings_timer_notify_hours', l(:redmine_quick_timelog_setting_timer_notify_hours) %>
+  <%= text_field_tag 'settings[timer_notify_hours]', settings['timer_notify_hours'].presence || '4', :size => 4 %>
+  <em class="info"><%= l(:redmine_quick_timelog_setting_timer_notify_hours_hint) %></em>
+</p>
+
+<p>
+  <%= label_tag 'settings_timer_notify_times', l(:redmine_quick_timelog_setting_timer_notify_times) %>
+  <%= text_field_tag 'settings[timer_notify_times]', settings['timer_notify_times'].to_s, :size => 30, :placeholder => '12:30, 18:00' %>
+  <em class="info"><%= l(:redmine_quick_timelog_setting_timer_notify_times_hint) %></em>
+</p>

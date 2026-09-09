@@ -1,0 +1,18 @@
+<%# "My page" block.
+    Redmine auto-discovers partials dropped under a plugin's app/views/my/blocks
+    (Redmine::MyPage.additional_blocks); the selector's label comes from the
+    my.blocks.redmine_quick_timelog i18n key. The chrome around it (the mypage-box div, sort
+    handle, close button) is added by MyHelper#render_block: don't rebuild it here.
+    Locals provided by Redmine: user, settings, block.
+
+    The widget partial renders its own title (next to the timer-start button), so this
+    file only needs a fallback title on the error path -- render_block hides a block
+    whose content comes back blank, and an exception here would take down the whole
+    "My page" view. %>
+<% begin %>
+  <%= render :partial => 'redmine_quick_timelog/widget' %>
+<% rescue StandardError => e %>
+  <h3><%= l(:redmine_quick_timelog_block_title) %></h3>
+  <% Rails.logger.error("redmine_quick_timelog: could not render the \"My page\" block (#{e.class}: #{e.message})") %>
+  <p class="nodata"><%= l(:redmine_quick_timelog_error_generic) %></p>
+<% end %>

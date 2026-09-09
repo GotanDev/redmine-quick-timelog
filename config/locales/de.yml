@@ -1,0 +1,91 @@
+de:
+  # Beschriftung des "Meine Seite"-Blocks (von Redmine::MyPage erwarteter Schlüssel).
+  my:
+    blocks:
+      redmine_quick_timelog: Schnelle Zeiterfassung
+
+  # Ausweichlösung von Redmine::MyPage, falls my.blocks.redmine_quick_timelog nicht auflösbar ist.
+  redmine_quick_timelog: Schnelle Zeiterfassung
+  label_redmine_quick_timelog: Schnellerfassung
+
+  redmine_quick_timelog_block_title: Schnelle Zeiterfassung
+  redmine_quick_timelog_page_title: Schnelle Zeiterfassung
+  redmine_quick_timelog_submit: Speichern
+  redmine_quick_timelog_shortcut_hint: "Strg + Eingabe zum Speichern"
+  redmine_quick_timelog_issue_placeholder: "Ticketnummer oder Betreffwörter"
+  redmine_quick_timelog_no_issue: Kein Ticket
+  redmine_quick_timelog_no_project: Sie dürfen auf keinem Projekt Zeit erfassen.
+  redmine_quick_timelog_recent_projects: Zuletzt verwendete Projekte
+  redmine_quick_timelog_all_projects: Alle Projekte
+  redmine_quick_timelog_hours_unit: Std.
+
+  redmine_quick_timelog_created: "%{hours} für %{subject} erfasst."
+  redmine_quick_timelog_error_generic: Speichern nicht möglich.
+  redmine_quick_timelog_error_invalid_expression: Ausdruck nicht verstanden
+  redmine_quick_timelog_error_negative: Die Summe ist negativ.
+  redmine_quick_timelog_error_project_not_allowed: Sie dürfen auf diesem Projekt keine Zeit erfassen.
+  redmine_quick_timelog_error_issue_not_found: Ticket nicht gefunden oder außerhalb des gewählten Projekts.
+
+  redmine_quick_timelog_recent_title: Heute
+  redmine_quick_timelog_no_entries: Heute wurde keine Zeit erfasst.
+  redmine_quick_timelog_total_day: Tagessumme
+  redmine_quick_timelog_total_week: Wochensumme
+
+  redmine_quick_timelog_history_title: "Letzte %{days} Tage"
+  redmine_quick_timelog_history_empty: Keine Einträge in diesem Zeitraum.
+
+  redmine_quick_timelog_wand_title: Stunden aus Zeitspannen berechnen
+  redmine_quick_timelog_wand_label: Zeitspannen
+  redmine_quick_timelog_wand_placeholder: "08:22 > 12:39, 13:22 > 14:32"
+  redmine_quick_timelog_wand_apply: Übernehmen
+  redmine_quick_timelog_wand_hint: "Zeitspannen «9h > 12h30», Dauern «1h30» oder «45m», Pausen «-30m». Mit Komma trennen."
+
+  redmine_quick_timelog_settings_title: Schnelle Zeiterfassung
+  redmine_quick_timelog_setting_show_on_welcome: Formular auf der Startseite anzeigen
+  redmine_quick_timelog_setting_show_on_welcome_hint: Fügt den Schnellerfassungs-Block in die rechte Spalte von Redmines Startseite ein.
+  redmine_quick_timelog_setting_inline_parse: Direkt im Feld "Stunden" eingegebene Zeitspannen interpretieren
+  redmine_quick_timelog_setting_inline_parse_hint: "Die Eingabe von «9h > 12h30» im Feld Stunden wird beim Verlassen des Feldes sofort in eine Dauer umgewandelt."
+  redmine_quick_timelog_setting_wand_everywhere: Den Zauberstab zu jedem Zeiterfassungsformular hinzufügen
+  redmine_quick_timelog_setting_wand_everywhere_hint: Deaktivieren, um ihn auf das Schnellerfassungsformular dieses Plugins zu beschränken.
+  redmine_quick_timelog_setting_default_activity: Vorgeschlagene Standardaktivität
+  redmine_quick_timelog_setting_recent_days: Verlauf (Tage vor heute)
+  redmine_quick_timelog_setting_comment_required: Kommentar in der Schnellerfassung erforderlich machen
+  redmine_quick_timelog_setting_working_days: Arbeitstage
+  redmine_quick_timelog_setting_working_days_hint: Wird für die untenstehende Hervorhebung fehlender Einträge verwendet; ein einfacher Wochenkalender, keine Feiertage.
+  redmine_quick_timelog_setting_highlight_missing_days: Arbeitstage ohne jeglichen Eintrag orange hervorheben
+  redmine_quick_timelog_setting_highlight_missing_days_hint: Wirkt sich nicht auf einen Tag aus, der durch eine persönliche typische Woche abgedeckt ist (siehe "Mein Konto"); diese hat Vorrang.
+  redmine_quick_timelog_setting_timer_notify_hours: Benachrichtigen nach (Stunden am Stück)
+  redmine_quick_timelog_setting_timer_notify_hours_hint: Zeigt eine Browser-Benachrichtigung, wenn die Stoppuhr ununterbrochen länger als diese Dauer läuft. Leer lassen oder 0 zum Deaktivieren.
+  redmine_quick_timelog_setting_timer_notify_times: Prüfzeiten
+  redmine_quick_timelog_setting_timer_notify_times_hint: "Zeigt eine Benachrichtigung, sobald die Uhrzeit erreicht ist und die Stoppuhr noch läuft. Mehrere Uhrzeiten durch Komma getrennt, z. B. 12:30, 18:00."
+
+  redmine_quick_timelog_weekly_target_title: Typische Woche
+  redmine_quick_timelog_weekly_target_hint: Erwartete Stunden pro Wochentag. Ein leer gelassener Tag wird nie hervorgehoben. Bestimmt die Farben im Verlauf der Schnellerfassung.
+  redmine_quick_timelog_weekly_target_saved: Gespeichert.
+  redmine_quick_timelog_weekly_target_error: Speichern nicht möglich.
+
+  label_redmine_quick_timelog_timer: Stoppuhr
+  redmine_quick_timelog_timer_title: Stoppuhr
+  redmine_quick_timelog_timer_start_btn: Stoppuhr starten
+  redmine_quick_timelog_timer_running: Stoppuhr läuft…
+  redmine_quick_timelog_timer_pause: Pause
+  redmine_quick_timelog_timer_paused: Pausiert
+  redmine_quick_timelog_timer_resume: Fortsetzen
+  redmine_quick_timelog_timer_reset: Zurücksetzen
+  redmine_quick_timelog_timer_reset_confirm: Stoppuhr auf null zurücksetzen?
+  redmine_quick_timelog_timer_stop: Stoppen und speichern
+  redmine_quick_timelog_timer_saving: Wird gespeichert…
+  redmine_quick_timelog_timer_saved: Zeit erfolgreich erfasst!
+  redmine_quick_timelog_timer_close: Fenster schließen
+  redmine_quick_timelog_timer_connected: Verbunden
+  redmine_quick_timelog_timer_reconnecting: Verbindung wird wiederhergestellt…
+  redmine_quick_timelog_timer_keepalive_hint: Sitzung bleibt aktiv — meldet Sie nie ab
+  redmine_quick_timelog_timer_comments_label: Woran Sie gerade arbeiten
+  redmine_quick_timelog_timer_comments_placeholder: Notieren Sie hier Ihre Aufgaben, Details und eine Zusammenfassung der laufenden Arbeit…
+  redmine_quick_timelog_timer_comments_hint: Ihre Notizen werden live gespeichert und zusammen mit der Zeit erfasst.
+  redmine_quick_timelog_timer_warn_running: Eine Stoppuhr läuft. Ihre Daten sind lokal gespeichert, aber die Zeit wurde noch nicht erfasst. Möchten Sie wirklich verlassen?
+  redmine_quick_timelog_timer_error_too_short: Die Stoppuhr muss mindestens einige Sekunden laufen, bevor sie gespeichert werden kann.
+  redmine_quick_timelog_timer_notify_long_title: Stoppuhr läuft schon länger
+  redmine_quick_timelog_timer_notify_long_body: "Diese Stoppuhr läuft seit über %{hours} Stunden ununterbrochen."
+  redmine_quick_timelog_timer_notify_time_title: Geplante Erinnerung
+  redmine_quick_timelog_timer_notify_time_body: "Es ist nach %{time} Uhr und die Stoppuhr läuft noch."

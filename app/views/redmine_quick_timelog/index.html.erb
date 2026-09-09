@@ -1,0 +1,7 @@
+<%# Dedicated page. The widget partial renders its own title next to the timer-start
+    button, so only the tab title is set here. %>
+<% html_title l(:redmine_quick_timelog_page_title) %>
+
+<div class="box qtl-page">
+  <%= render :partial => 'redmine_quick_timelog/widget', :locals => {:time_entry => @time_entry} %>
+</div>

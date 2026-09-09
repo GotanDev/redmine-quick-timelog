@@ -1,0 +1,17 @@
+<%# Global F9 shortcut for the "Quick log" top-menu entry. Rendered on every page for a
+    logged-in user allowed to log time (mirrors the top-menu :if in init.rb), so it's
+    always available wherever the menu entry itself would show up. %>
+<script>
+(function () {
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'F9' || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) { return; }
+
+    var active = document.activeElement;
+    if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' ||
+        active.tagName === 'SELECT' || active.isContentEditable)) { return; }
+
+    event.preventDefault();
+    window.location.href = <%= raw redmine_quick_timelog_path.to_json %>;
+  });
+}());
+</script>

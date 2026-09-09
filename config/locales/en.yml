@@ -1,0 +1,91 @@
+en:
+  # "My page" block label (key expected by Redmine::MyPage).
+  my:
+    blocks:
+      redmine_quick_timelog: Quick time logging
+
+  # Fallback used by Redmine::MyPage when my.blocks.redmine_quick_timelog can't be resolved.
+  redmine_quick_timelog: Quick time logging
+  label_redmine_quick_timelog: Quick log
+
+  redmine_quick_timelog_block_title: Quick time logging
+  redmine_quick_timelog_page_title: Quick time logging
+  redmine_quick_timelog_submit: Log time
+  redmine_quick_timelog_shortcut_hint: "Ctrl + Enter to save"
+  redmine_quick_timelog_issue_placeholder: "Issue number or subject words"
+  redmine_quick_timelog_no_issue: No issue
+  redmine_quick_timelog_no_project: You are not allowed to log time on any project.
+  redmine_quick_timelog_recent_projects: Recent projects
+  redmine_quick_timelog_all_projects: All projects
+  redmine_quick_timelog_hours_unit: h
+
+  redmine_quick_timelog_created: "%{hours} logged on %{subject}."
+  redmine_quick_timelog_error_generic: Could not save.
+  redmine_quick_timelog_error_invalid_expression: Could not understand that
+  redmine_quick_timelog_error_negative: The total is negative.
+  redmine_quick_timelog_error_project_not_allowed: You are not allowed to log time on this project.
+  redmine_quick_timelog_error_issue_not_found: Issue not found, or outside the selected project.
+
+  redmine_quick_timelog_recent_title: Today
+  redmine_quick_timelog_no_entries: No time logged today.
+  redmine_quick_timelog_total_day: Day total
+  redmine_quick_timelog_total_week: Week total
+
+  redmine_quick_timelog_history_title: "Last %{days} days"
+  redmine_quick_timelog_history_empty: No entries over that period.
+
+  redmine_quick_timelog_wand_title: Calculate hours from time ranges
+  redmine_quick_timelog_wand_label: Time ranges
+  redmine_quick_timelog_wand_placeholder: "08:22 > 12:39, 13:22 > 14:32"
+  redmine_quick_timelog_wand_apply: Apply
+  redmine_quick_timelog_wand_hint: "Ranges \"9h > 12h30\", durations \"1h30\" or \"45m\", breaks \"-30m\". Separate with a comma."
+
+  redmine_quick_timelog_settings_title: Quick time logging
+  redmine_quick_timelog_setting_show_on_welcome: Show the form on the welcome page
+  redmine_quick_timelog_setting_show_on_welcome_hint: Adds the quick-logging block to the right column of Redmine's home page.
+  redmine_quick_timelog_setting_inline_parse: Parse time ranges typed directly into the "Hours" field
+  redmine_quick_timelog_setting_inline_parse_hint: "Typing \"9h > 12h30\" into the Hours field converts it to a duration as soon as the field loses focus."
+  redmine_quick_timelog_setting_wand_everywhere: Add the magic wand to every time-entry form
+  redmine_quick_timelog_setting_wand_everywhere_hint: Uncheck to limit it to this plugin's own quick-entry form.
+  redmine_quick_timelog_setting_default_activity: Default activity
+  redmine_quick_timelog_setting_recent_days: History (days before today)
+  redmine_quick_timelog_setting_comment_required: Require a comment in the quick-entry form
+  redmine_quick_timelog_setting_working_days: Working days
+  redmine_quick_timelog_setting_working_days_hint: Used for the "no entry" highlight below; a plain weekly calendar, not public holidays.
+  redmine_quick_timelog_setting_highlight_missing_days: Highlight working days with no entry at all in orange
+  redmine_quick_timelog_setting_highlight_missing_days_hint: Has no effect on a day covered by a personal typical week (see "My account"); that one takes priority.
+  redmine_quick_timelog_setting_timer_notify_hours: Notify after (consecutive hours)
+  redmine_quick_timelog_setting_timer_notify_hours_hint: Shows a browser notification if the timer has been running without interruption past this duration. Leave blank or 0 to disable.
+  redmine_quick_timelog_setting_timer_notify_times: Check-in times
+  redmine_quick_timelog_setting_timer_notify_times_hint: "Shows a notification as soon as the time has passed and the timer is still running. Several times separated by a comma, e.g. 12:30, 18:00."
+
+  redmine_quick_timelog_weekly_target_title: Typical week
+  redmine_quick_timelog_weekly_target_hint: Expected hours per weekday. A day left blank is never highlighted. Feeds the colours of the quick-log history.
+  redmine_quick_timelog_weekly_target_saved: Saved.
+  redmine_quick_timelog_weekly_target_error: Could not save.
+
+  label_redmine_quick_timelog_timer: Stopwatch
+  redmine_quick_timelog_timer_title: Stopwatch
+  redmine_quick_timelog_timer_start_btn: Start the timer
+  redmine_quick_timelog_timer_running: Timer running…
+  redmine_quick_timelog_timer_pause: Pause
+  redmine_quick_timelog_timer_paused: Paused
+  redmine_quick_timelog_timer_resume: Resume
+  redmine_quick_timelog_timer_reset: Reset
+  redmine_quick_timelog_timer_reset_confirm: Reset the timer to zero?
+  redmine_quick_timelog_timer_stop: Stop and log time
+  redmine_quick_timelog_timer_saving: Saving…
+  redmine_quick_timelog_timer_saved: Time logged successfully!
+  redmine_quick_timelog_timer_close: Close the window
+  redmine_quick_timelog_timer_connected: Connected
+  redmine_quick_timelog_timer_reconnecting: Reconnecting…
+  redmine_quick_timelog_timer_keepalive_hint: Session kept alive — never signs you out
+  redmine_quick_timelog_timer_comments_label: What you're working on
+  redmine_quick_timelog_timer_comments_placeholder: Jot down your tasks, details and a summary of the current work…
+  redmine_quick_timelog_timer_comments_hint: Your notes are saved live and will be logged together with the time.
+  redmine_quick_timelog_timer_warn_running: A timer is running. Your data is kept locally, but the time hasn't been logged yet. Do you really want to leave?
+  redmine_quick_timelog_timer_error_too_short: The timer must run for at least a few seconds before it can be saved.
+  redmine_quick_timelog_timer_notify_long_title: Timer running for a while
+  redmine_quick_timelog_timer_notify_long_body: "This timer has been running continuously for over %{hours} hours."
+  redmine_quick_timelog_timer_notify_time_title: Scheduled check-in
+  redmine_quick_timelog_timer_notify_time_body: "It is past %{time} and the timer is still running."

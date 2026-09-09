@@ -1,0 +1,48 @@
+<%# Collapsible tree of the days before today: day > project > activity, with a
+    cumulated total on every row. Native <details>/<summary> handle expand/collapse
+    with no JavaScript; only two interactive bits inside a <summary> need the small
+    script in redmine_quick_timelog.js, so their own click doesn't also toggle the disclosure:
+    the date-pick button (preselects that day in the form next to it), and the project
+    link (goes to that project's logged time). %>
+<% tree = redmine_quick_timelog_history_tree(days) %>
+<div class="qtl-history" data-qtl-history="1">
+  <h4 class="qtl-history__title"><%= l(:redmine_quick_timelog_history_title, :days => days) %></h4>
+
+  <% if tree.empty? %>
+    <p class="qtl-history__empty"><%= l(:redmine_quick_timelog_history_empty) %></p>
+  <% else %>
+    <% tree.each do |day| %>
+      <details class="qtl-history__day <%= "qtl-history__day--#{day[:status]}" unless day[:status] == :none %>">
+        <summary class="qtl-history__day-summary">
+          <span class="qtl-history__chevron">▸</span>
+          <span class="qtl-history__day-status"></span>
+          <button type="button" class="qtl-history__pick" data-qtl-pick-date="<%= day[:date].iso8601 %>">
+            <%= redmine_quick_timelog_day_label(day[:date]) %>
+          </button>
+          <span class="qtl-history__day-total"><%= redmine_quick_timelog_format_hours(day[:total]) %></span>
+        </summary>
+
+        <div class="qtl-history__projects">
+          <% day[:projects].each do |row| %>
+            <details class="qtl-history__project">
+              <summary class="qtl-history__project-summary">
+                <span class="qtl-history__chevron">▸</span>
+                <%= link_to row[:project].name, project_time_entries_path(row[:project]),
+                            :class => 'qtl-history__project-name', :data => {:'qtl-history-link' => '1'} %>
+                <span class="qtl-history__project-total"><%= redmine_quick_timelog_format_hours(row[:total]) %></span>
+              </summary>
+              <ul class="qtl-history__activities">
+                <% row[:activities].each do |activity_row| %>
+                  <li class="qtl-history__activity-row">
+                    <span class="qtl-history__activity-name"><%= activity_row[:activity].try(:name) %></span>
+                    <span class="qtl-history__activity-total"><%= redmine_quick_timelog_format_hours(activity_row[:total]) %></span>
+                  </li>
+                <% end %>
+              </ul>
+            </details>
+          <% end %>
+        </div>
+      </details>
+    <% end %>
+  <% end %>
+</div>

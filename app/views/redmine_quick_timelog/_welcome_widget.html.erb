@@ -1,0 +1,9 @@
+<%# Widget inserted into the home page's right column (view_welcome_index_right hook).
+    The guard avoids a double render if, in development, several listener instances have
+    stacked up across reloads. The widget partial renders its own title. %>
+<% unless @redmine_quick_timelog_welcome_rendered %>
+  <% @redmine_quick_timelog_welcome_rendered = true %>
+  <div class="box qtl-welcome">
+    <%= render :partial => 'redmine_quick_timelog/widget' %>
+  </div>
+<% end %>

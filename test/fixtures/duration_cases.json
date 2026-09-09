@@ -1,0 +1,355 @@
+{
+ "_comment": "Cas de reference partages par le parseur JS (assets/javascripts/redmine_quick_timelog_parser.js) et le parseur Ruby (lib/redmine_quick_timelog/duration_parser.rb). minutes = null signifie que l'expression doit etre rejetee.",
+ "cases": [
+  {
+   "input": "08:22 > 12:39, 13:22 > 14:32",
+   "minutes": 327,
+   "why": "cas nominal de la demande : 4h17 + 1h10"
+  },
+  {
+   "input": "08:22>12:39,13:22>14:32",
+   "minutes": 327,
+   "why": "sans espaces"
+  },
+  {
+   "input": "8:22 > 12:39",
+   "minutes": 257,
+   "why": "heure sur un chiffre"
+  },
+  {
+   "input": "9-12",
+   "minutes": 180,
+   "why": "tiret comme separateur, heures nues"
+  },
+  {
+   "input": "9 h > 12 h 30",
+   "minutes": 210,
+   "why": "notation h avec espaces"
+  },
+  {
+   "input": "9h>12h30",
+   "minutes": 210,
+   "why": "notation h collee"
+  },
+  {
+   "input": "08h22 > 12h39",
+   "minutes": 257,
+   "why": "notation h avec zeros"
+  },
+  {
+   "input": "08:00 -> 12:00",
+   "minutes": 240,
+   "why": "fleche ascii"
+  },
+  {
+   "input": "08:00 --> 12:00",
+   "minutes": 240,
+   "why": "fleche ascii longue"
+  },
+  {
+   "input": "08:00 => 12:00",
+   "minutes": 240,
+   "why": "fleche grasse"
+  },
+  {
+   "input": "08:00 → 12:00",
+   "minutes": 240,
+   "why": "fleche unicode"
+  },
+  {
+   "input": "08:00 – 12:00",
+   "minutes": 240,
+   "why": "tiret demi-cadratin"
+  },
+  {
+   "input": "08:00 — 12:00",
+   "minutes": 240,
+   "why": "tiret cadratin"
+  },
+  {
+   "input": "8:00 a 12:00",
+   "minutes": 240,
+   "why": "separateur textuel a"
+  },
+  {
+   "input": "8:00 à 12:00",
+   "minutes": 240,
+   "why": "separateur textuel a accentue"
+  },
+  {
+   "input": "8:00 to 12:00",
+   "minutes": 240,
+   "why": "separateur textuel anglais"
+  },
+  {
+   "input": "8:00 .. 12:00",
+   "minutes": 240,
+   "why": "intervalle par points"
+  },
+  {
+   "input": "0822 > 1239",
+   "minutes": 257,
+   "why": "format militaire 4 chiffres"
+  },
+  {
+   "input": "822 > 1239",
+   "minutes": 257,
+   "why": "format militaire 3 chiffres"
+  },
+  {
+   "input": "22:00 > 02:00",
+   "minutes": 240,
+   "why": "passage de minuit"
+  },
+  {
+   "input": "23:30 > 00:00",
+   "minutes": 30,
+   "why": "fin a minuit"
+  },
+  {
+   "input": "23:30 > 24:00",
+   "minutes": 30,
+   "why": "24:00 accepte comme minuit"
+  },
+  {
+   "input": "12:00 > 12:00",
+   "minutes": 0,
+   "why": "plage vide, pas 24h"
+  },
+  {
+   "input": "9 > 12 > 17",
+   "minutes": 480,
+   "why": "chainage : somme des intervalles consecutifs"
+  },
+  {
+   "input": "8:22am > 12:39pm",
+   "minutes": 257,
+   "why": "format 12h"
+  },
+  {
+   "input": "12:30am > 1:30am",
+   "minutes": 60,
+   "why": "minuit en am"
+  },
+  {
+   "input": "1h30",
+   "minutes": 90,
+   "why": "duree seule"
+  },
+  {
+   "input": "1 h 30",
+   "minutes": 90,
+   "why": "duree seule espacee"
+  },
+  {
+   "input": "2h",
+   "minutes": 120,
+   "why": "duree en heures pleines"
+  },
+  {
+   "input": "45m",
+   "minutes": 45,
+   "why": "duree en minutes"
+  },
+  {
+   "input": "45min",
+   "minutes": 45,
+   "why": "duree en minutes, suffixe long"
+  },
+  {
+   "input": "90 minutes",
+   "minutes": 90,
+   "why": "duree en minutes, mot complet"
+  },
+  {
+   "input": "1.5h",
+   "minutes": 90,
+   "why": "duree decimale au point"
+  },
+  {
+   "input": "1,5h",
+   "minutes": 90,
+   "why": "duree decimale a la virgule (ne doit pas etre coupee en segments)"
+  },
+  {
+   "input": "0:45",
+   "minutes": 45,
+   "why": "duree isolee en h:mm"
+  },
+  {
+   "input": "2",
+   "minutes": 120,
+   "why": "nombre nu isole = heures"
+  },
+  {
+   "input": "0.25",
+   "minutes": 15,
+   "why": "fraction d'heure"
+  },
+  {
+   "input": "08:00 > 12:00, -30m",
+   "minutes": 210,
+   "why": "pause soustraite"
+  },
+  {
+   "input": "08:00 > 12:00 -30m",
+   "minutes": 210,
+   "why": "pause soustraite sans virgule"
+  },
+  {
+   "input": "9 > 17, -1h",
+   "minutes": 420,
+   "why": "journee moins pause dejeuner"
+  },
+  {
+   "input": "1h30 + 45m",
+   "minutes": 135,
+   "why": "additions explicites"
+  },
+  {
+   "input": "8:00 > 12:00 ; 13:00 > 17:00",
+   "minutes": 480,
+   "why": "point-virgule"
+  },
+  {
+   "input": "8:00 > 12:00\n13:00 > 17:00",
+   "minutes": 480,
+   "why": "retour a la ligne"
+  },
+  {
+   "input": "  08:22   >   12:39  ",
+   "minutes": 257,
+   "why": "espaces superflus"
+  },
+  {
+   "input": "08:22 > 12:39,",
+   "minutes": 257,
+   "why": "virgule finale toleree"
+  },
+  {
+   "input": ",08:22 > 12:39",
+   "minutes": 257,
+   "why": "virgule initiale toleree"
+  },
+  {
+   "input": "",
+   "minutes": null,
+   "why": "vide"
+  },
+  {
+   "input": "   ",
+   "minutes": null,
+   "why": "blanc"
+  },
+  {
+   "input": "abc",
+   "minutes": null,
+   "why": "texte libre"
+  },
+  {
+   "input": "08:22 > ",
+   "minutes": null,
+   "why": "borne de fin manquante"
+  },
+  {
+   "input": "> 12:39",
+   "minutes": null,
+   "why": "borne de debut manquante"
+  },
+  {
+   "input": "25:00 > 26:00",
+   "minutes": null,
+   "why": "heure hors plage"
+  },
+  {
+   "input": "8:70 > 9:00",
+   "minutes": null,
+   "why": "minutes hors plage"
+  },
+  {
+   "input": "24:30 > 25:00",
+   "minutes": null,
+   "why": "24:xx invalide au dela de 24:00"
+  },
+  {
+   "input": "8:00 > 12:00, xyz",
+   "minutes": null,
+   "why": "un segment invalide invalide le tout"
+  },
+  {
+   "input": "-30m",
+   "minutes": null,
+   "why": "total negatif refuse"
+  },
+  {
+   "input": "9 > 9",
+   "minutes": 0,
+   "why": "total nul accepte par le parseur (le formulaire le refusera)"
+  },
+  {
+   "input": "1,5",
+   "minutes": 90,
+   "why": "decimale a la francaise seule : Redmine la lit ainsi, pas 1h + 5h"
+  },
+  {
+   "input": "0,25",
+   "minutes": 15,
+   "why": "fraction d'heure a la virgule"
+  },
+  {
+   "input": "1.5",
+   "minutes": 90,
+   "why": "fraction d'heure au point"
+  },
+  {
+   "input": "2h - 1h",
+   "minutes": 60,
+   "why": "tiret entre deux durees : soustraction, pas une nuit a cheval"
+  },
+  {
+   "input": "1h30 - 30m",
+   "minutes": 60,
+   "why": "soustraction d'une pause exprimee en minutes"
+  },
+  {
+   "input": "12-9",
+   "minutes": 180,
+   "why": "plage retrograde sur un tiret : lue comme une soustraction"
+  },
+  {
+   "input": "22 > 2",
+   "minutes": 240,
+   "why": "le passage de minuit reste possible avec un separateur explicite"
+  },
+  {
+   "input": "8:00 > 12:00",
+   "minutes": 240,
+   "why": "espaces fines d'un copier-coller"
+  },
+  {
+   "input": "﻿9h > 12h",
+   "minutes": 180,
+   "why": "marque d'ordre des octets en tete"
+  },
+  {
+   "input": "8:00 > 12:00",
+   "minutes": 240,
+   "why": "espaces insecables"
+  },
+  {
+   "input": "9　1　> 12",
+   "minutes": null,
+   "why": "ideographique : segments incomprehensibles"
+  },
+  {
+   "input": "1,9999999999999999999999999999999999999999999999",
+   "minutes": null,
+   "why": "jeton absurde : refuse sans lever d'exception"
+  },
+  {
+   "input": "99999999999999999999999999999999999999999999999999",
+   "minutes": null,
+   "why": "nombre hors bornes"
+  }
+ ]
+}

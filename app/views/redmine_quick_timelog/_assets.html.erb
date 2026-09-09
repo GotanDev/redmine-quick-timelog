@@ -1,0 +1,14 @@
+<%# The plugin's stylesheet, scripts and configuration.
+    The content goes through content_for :header_tags so it lands in <head> even when
+    this partial is rendered from the page body (the "My page" block, the home-page
+    widget): Rails renders the template before the layout.
+    Idempotent: several hooks may call this partial on the same page. %>
+<% unless @redmine_quick_timelog_assets_included %>
+  <% @redmine_quick_timelog_assets_included = true %>
+  <% content_for :header_tags do %>
+    <%= stylesheet_link_tag 'redmine_quick_timelog.css', :plugin => 'redmine_quick_timelog' %>
+    <%= javascript_include_tag 'redmine_quick_timelog_parser.js', :plugin => 'redmine_quick_timelog' %>
+    <%= javascript_include_tag 'redmine_quick_timelog.js', :plugin => 'redmine_quick_timelog' %>
+    <script type="application/json" id="redmine-quick-timelog-config"><%= raw ERB::Util.json_escape(redmine_quick_timelog_config(local_assigns[:project]).to_json) %></script>
+  <% end %>
+<% end %>
