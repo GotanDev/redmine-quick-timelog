@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<title>redmine_quick_timelog — démonstration</title>
+<style>
+  /* Reprise sommaire du thème Redmine pour situer le rendu. */
+  body { font-family: "Lucida Grande", Verdana, sans-serif; font-size: 12px; color: #333; background: #fff; margin: 2em; }
+  h2 { font-size: 20px; font-weight: normal; color: #555; border-bottom: 1px dotted #bbb; padding-bottom: .2em; }
+  .box { background: #fcfcfc; border: 1px solid #e4e4e4; padding: 10px; margin-bottom: 1em; }
+  .tabular p { margin: 0 0 8px; clear: left; }
+  .tabular label { float: left; width: 22%; text-align: right; margin-right: 10px; font-weight: bold; }
+  .tabular input[type=text], .tabular select { border: 1px solid #ccc; padding: 2px; }
+  .required { color: #bb0000; }
+</style>
+<link rel="stylesheet" href="../assets/stylesheets/redmine_quick_timelog.css">
+</head><body>
+<h2>Temps passé</h2>
+<form class="box tabular">
+  <p><label for="time_entry_issue_id">Demande</label><input type="text" id="time_entry_issue_id" name="time_entry[issue_id]" size="6"></p>
+  <p><label for="time_entry_user_id">Utilisateur <span class="required">*</span></label><select id="time_entry_user_id"><option>&lt;&lt; moi &gt;&gt;</option></select></p>
+  <p><label for="time_entry_spent_on">Date <span class="required">*</span></label><input type="date" id="time_entry_spent_on" value="2026-09-08"></p>
+  <p><label for="time_entry_hours">Heures <span class="required">*</span></label><input type="text" id="time_entry_hours" name="time_entry[hours]" size="6" placeholder="h:mm"></p>
+  <p><label for="time_entry_comments">Commentaire</label><input type="text" id="time_entry_comments" size="60"></p>
+  <p><label for="time_entry_activity_id">Activité <span class="required">*</span></label><select id="time_entry_activity_id"><option>Développement</option></select></p>
+</form>
+<script type="application/json" id="redmine-quick-timelog-config">{"timespanFormat":"minutes","inlineParse":true,"i18n":{"hours_unit":"h","error_invalid":"Expression incomprise","error_negative":"Le total est négatif.","wand_title":"Calculer les heures depuis des plages horaires","wand_label":"Plages horaires","wand_placeholder":"08:22 > 12:39, 13:22 > 14:32","wand_apply":"Appliquer","wand_hint":"Plages « 9h > 12h30 », durées « 1h30 » ou « 45m », pauses « -30m ». Séparez par une virgule."}}</script>
+<script src="../assets/javascripts/redmine_quick_timelog_parser.js"></script>
+<script src="../assets/javascripts/redmine_quick_timelog.js"></script>
+</body></html>
